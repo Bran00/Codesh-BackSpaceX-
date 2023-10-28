@@ -3,6 +3,7 @@
 ## Descrição
 
 Este é um projeto de backend para a API da SpaceX que fornece informações sobre os lançamentos da SpaceX e várias estatísticas relacionadas.
+Acesse a API em tempo real <a href="https://c-sg0n.onrender.com/">Aqui</a>
 
 ## Tecnologias Utilizadas
 
