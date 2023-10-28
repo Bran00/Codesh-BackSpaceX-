@@ -1,0 +1,221 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SpaceX API",
+    "description": "API for SpaceX launch data",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/launches": {
+      "get": {
+        "summary": "Get a list of SpaceX launches",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search term",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of launches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchList"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/launches/stats": {
+      "get": {
+        "summary": "Get statistics for SpaceX launches",
+        "responses": {
+          "200": {
+            "description": "Statistics for SpaceX launches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Statistics"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/launches/stats/reusable": {
+      "get": {
+        "summary": "Get statistics for reusable stages",
+        "responses": {
+          "200": {
+            "description": "Statistics for reusable stages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReusableStatistics"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    },
+    "/launches/stats/byMonthAndRocket": {
+      "get": {
+        "summary": "Get statistics for launches by month and rocket",
+        "responses": {
+          "200": {
+            "description": "Statistics for launches by month and rocket",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchesByMonthAndRocket"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LaunchList": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Launch"
+            }
+          },
+          "totalDocs": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "totalPages": {
+            "type": "integer"
+          },
+          "hasNext": {
+            "type": "boolean"
+          },
+          "hasPrev": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Launch": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "cores": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Core"
+            }
+          }
+        }
+      },
+      "Core": {
+        "type": "object",
+        "properties": {
+          "core": {
+            "type": "string"
+          },
+          "flight": {
+            "type": "integer"
+          },
+          "gridfins": {
+            "type": "boolean"
+          },
+          "legs": {
+            "type": "boolean"
+          },
+          "reused": {
+            "type": "boolean"
+          },
+          "landing_attempt": {
+            "type": "boolean"
+          },
+          "landing_success": {
+            "type": "boolean"
+          },
+          "landing_type": {
+            "type": "string"
+          },
+          "landpad": {
+            "type": "string"
+          }
+        }
+      },
+      "Statistics": {
+        "type": "object",
+        "properties": {
+          "successes": {
+            "type": "integer"
+          },
+          "failures": {
+            "type": "integer"
+          }
+        }
+      },
+      "ReusableStatistics": {
+        "type": "object",
+        "properties": {
+          "withReusableStages": {
+            "type": "integer"
+          },
+          "withoutReusableStages": {
+            "type": "integer"
+          }
+        }
+      },
+      "LaunchesByMonthAndRocket": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
