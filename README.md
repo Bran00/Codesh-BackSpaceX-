@@ -18,6 +18,7 @@ Este é um projeto de backend para a API da SpaceX que fornece informações sob
 - Swagger-jsdoc
 - Swagger-ui-express
 - Twilio
+- Docker
 
 ## Como Rodar
 
