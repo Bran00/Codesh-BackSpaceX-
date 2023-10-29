@@ -23,7 +23,6 @@ routes.get("/", (req, res) => {
   })
 })
 
-// Rotas de lançamentos
 routes.use("/launches", launchesRoutes)
 
 module.exports = routes

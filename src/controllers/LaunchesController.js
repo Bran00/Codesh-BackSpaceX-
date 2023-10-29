@@ -28,13 +28,11 @@ class LaunchesController {
           })
         }
       }
-      // Filtrar os dados com base no parâmetro de busca
+
       const filteredData = filterData(data, search)
 
-      // Limitar os resultados com base no parâmetro "limit"
       let limitedData = filteredData.slice(0, limit)
 
-      // Construir a estrutura de resposta
       const totalDocs = limitedData.length
       const page = 1
       const totalPages = Math.ceil(totalDocs / limit)
@@ -65,11 +63,9 @@ class LaunchesController {
     try {
       const data = await getAllDataFromMongoDB()
 
-      // Inicialize contadores
       let successes = 0
       let failures = 0
 
-      // Percorra os dados e conte sucessos e falhas
       data.forEach((item) => {
         if (item.success) {
           successes++
@@ -78,7 +74,6 @@ class LaunchesController {
         }
       })
 
-      // Retorne a contagem no formato apropriado
       return response.status(200).json({
         successes,
         failures,
@@ -93,18 +88,14 @@ class LaunchesController {
     try {
       const data = await getAllDataFromMongoDB()
 
-      // Inicialize contadores
       let withReusableStages = 0
       let withoutReusableStages = 0
 
-      // Percorra os dados e conte lançamentos com e sem estágios reaproveitáveis
       data.forEach((item) => {
         if (item.cores && item.cores.length > 0) {
-          // Verifique se há pelo menos um objeto no array "cores"
           const reusedCores = item.cores.filter((core) => core.reused === true)
 
           if (reusedCores.length > 0) {
-            // Se pelo menos um dos "cores" for reaproveitável, conte-o como com estágios reaproveitáveis
             withReusableStages++
           } else {
             withoutReusableStages++
@@ -114,7 +105,6 @@ class LaunchesController {
         }
       })
 
-      // Retorne a contagem no formato apropriado para o gráfico de pizza
       return response.status(200).json({
         withReusableStages,
         withoutReusableStages,
